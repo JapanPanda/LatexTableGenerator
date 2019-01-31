@@ -29,16 +29,16 @@ This program also automatically pads your columns as well, so for values that ar
 For now only the Truth Table is supported, there is more customizable tables coming for sure.
 
 **Example of A Generated Truth Table**
-
-    \begin{displaymath}
-    \begin{array}{|c|c|c|}
-    p        & q        & p \lor q \\
-    \hline
-    T        & T        & T        \\
-    T        & F        & T        \\
-    F        & T        & T        \\
-    F        & F        & F        \\
-    \end{array}
-    \end{displaymath}
-
+```latex
+\begin{displaymath}
+\begin{array}{|c|c|c|}
+p        & q        & p \lor q \\
+\hline
+T        & T        & T        \\
+T        & F        & T        \\
+F        & T        & T        \\
+F        & F        & F        \\
+\end{array}
+\end{displaymath}
+```
 Note how the columns are properly spaced and easy to read even when its raw Latex!
