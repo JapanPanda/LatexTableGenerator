@@ -1,15 +1,25 @@
 import pyperclip
 
 def main():
-    print("Latei Table Generator v0.1")
+    print("Latex Table Generator v0.1")
     print("This script will generate a customizable table.") # For now only truth tables
     blankTable = getInput()
     return 0
 
 def getInput():
-    tableChoice = input("What type of table would you like:\n1. Truth\n2. Customize\n>> ")
-    if tableChoice == "1" or tableChoice.lower() == "truth":
+    tableChoice = input("What type of table would you like:\n1. Regular\n2. Truth\n3. Customizable\n>> ")
+    if tableChoice == "1" or tableChoice.lower() == "regular":
+        return regTableGenerator()
+    elif tableChoice == "2" or tableChoice.lower() == "truth":
         return truthTableGenerator()
+    elif tableChoice == "3" or tableChoice.lower() == "customizable":
+        return customTableGenerator()
+
+def regTableGenerator(): # TODO: Add regular table support
+    return
+
+def customTableGenerator():
+    return
 
 def truthTableGenerator():
     columns = int(input("How many columns in your table?\n>> "))
@@ -24,16 +34,16 @@ def truthTableGenerator():
     # Get the title of the columns
     print("Please define the column titles.")
     columnTitleList = []
+    maxpadding = 0
     for i in range(columns):
         title = input("Column " + str(i + 1) + ": ")
         columnTitleList.append(title)
-        table += title + " & "
-    table = table[:len(table) - 2]
-    table += "\\\\\n\hline\n"
+        maxpadding = len(title) if maxpadding < len(title) else maxpadding
+
     colMatrix = []
     max = 0
     for i in range(columns):
-        print("Please enter the values for Column " + columnTitleList[i] + ". Enter /q to exit.") # TODO: Dynamic column names (list of column titles)
+        print("Please enter the values for Column " + columnTitleList[i] + ". Enter /q to exit.")
         count = 1
         colValues = []
         while True:
@@ -42,17 +52,30 @@ def truthTableGenerator():
             if colValue == "/q":
                 break
             else:
+                maxpadding = len(colValue) if maxpadding < len(colValue) else maxpadding
                 colValues.append(colValue)
 
         colMatrix.append(colValues)
         max = len(colValues) if max < len(colValues) else max
 
+    for i in range(len(columnTitleList)):
+        table += columnTitleList[i]
+        for x in range(maxpadding - len(columnTitleList[i])):
+            table += " "
+        table += " & "
+    table = table[:len(table) - 2]
+    table += "\\\\\n\hline\n"
     for i in range(max):
         for j in range(len(colMatrix)):
             if i >= len(colMatrix[j]):
-                table += "  & "
+                for x in range(maxpadding):
+                    table += " "
+                table += " & "
             else:
-                table += colMatrix[j][i] + " & "
+                table += colMatrix[j][i]
+                for x in range(maxpadding - len(colMatrix[j][i])):
+                    table += " "
+                table += " & "
         table = table[:len(table) - 2] + "\\\\\n"
     table += "\end{array}\n\end{displaymath}\n"
     print("Preview of the Latex: ")
