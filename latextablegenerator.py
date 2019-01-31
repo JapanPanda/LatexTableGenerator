@@ -30,14 +30,14 @@ def truthTableGenerator():
         table += title + " & "
     table = table[:len(table) - 2]
     table += "\\\\\n\hline\n"
-    print(table)
     colMatrix = []
+    max = 0
     for i in range(columns):
-        print("Please enter the values for Column " + str(i + 1) + ". Enter /q to exit.") # TODO: Dynamic column names (list of column titles)
+        print("Please enter the values for Column " + columnTitleList[i] + ". Enter /q to exit.") # TODO: Dynamic column names (list of column titles)
         count = 1
         colValues = []
         while True:
-            colValue = input("Column " + str(i + 1) + " Entry " + str(count) + ": ")
+            colValue = input("Column " + columnTitleList[i] + " Entry " + str(count) + ": ")
             count += 1
             if colValue == "/q":
                 break
@@ -45,14 +45,21 @@ def truthTableGenerator():
                 colValues.append(colValue)
 
         colMatrix.append(colValues)
+        max = len(colValues) if max < len(colValues) else max
 
-    for i in range(len(colMatrix[0])):
+    for i in range(max):
         for j in range(len(colMatrix)):
-            table += colMatrix[j][i] + " & "
+            if i >= len(colMatrix[j]):
+                table += "  & "
+            else:
+                table += colMatrix[j][i] + " & "
         table = table[:len(table) - 2] + "\\\\\n"
     table += "\end{array}\n\end{displaymath}\n"
+    print("Preview of the Latex: ")
     print(table)
-    pyperclip.copy(table)
+    copy = input("Would you like to copy to clipboard? Y/N\n>> ")
+    if copy == "Y":
+        pyperclip.copy(table)
     return
 
 if __name__ == "__main__":
