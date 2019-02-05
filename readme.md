@@ -56,3 +56,9 @@ F        & F        & F        \\
 \end{displaymath}
 ```
 Note how the columns are properly spaced and easy to read even when its raw Latex!
+
+## Dependencies
+[pyperclip](https://pypi.org/project/pyperclip/)
+
+## How to Run It
+Install pyperclip module and run the python script with Python 3.
