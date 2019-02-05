@@ -67,6 +67,7 @@ def truthTableGenerator():
 def getMainBody(outputTable):
     colMatrix = []
     max = 0
+
     for i in range(outputTable.columns):
         print("Please enter the values for Column " + outputTable.colTitleList[i] + ". Enter /q to exit.")
         count = 1
@@ -83,6 +84,13 @@ def getMainBody(outputTable):
         colMatrix.append(colValues)
         max = len(colValues) if max < len(colValues) else max
 
+    if outputTable.maxpadding > 30:
+        print("\nSorry, theres too much space consumed to pad it properly, so padding will be disabled!")
+        outputTable.maxpadding = 0
+    else:
+        pad = input("\nWould you like to pad the table for readability?\n>> ")
+        if pad.lower() == "n":
+            outputTable.maxpadding = 0
 
     for i in range(len(outputTable.colTitleList)):
         outputTable.table += outputTable.colTitleList[i]
